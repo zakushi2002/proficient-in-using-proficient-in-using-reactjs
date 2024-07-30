@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ReactJS</title>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@17.0.2/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
+        <h1>Add React to website</h1>
+        <div id="root"></div>
+    </body>
+    <script type="text/babel">
+        console.log(React.version);
+
+        const postItem = React.createElement(
+            "div",
+            {
+                className: "post-item",
+            },
+            React.createElement(
+                "h2",
+                {
+                    title: "Học React tại F8",
+                },
+                "Học ReactJS"
+            ),
+            React.createElement("p", {}, "Học React từ cơ bản đến nâng cao"),
+            React.createElement(
+                "ul",
+                {},
+                React.createElement("li", {}, "Javascript"),
+                React.createElement("li", {}, "ReactJS")
+            )
+        );
+        const courses = [
+            {
+                name: "HTML, CSS",
+            },
+            {
+                name: "Javascript",
+            },
+            {
+                name: "ReactJS",
+            },
+        ];
+        const ul = (
+            <ul>
+                {courses.map((course, index) => (
+                    <li key={index}>{course.name}</li>
+                ))}
+            </ul>
+        );
+        const root = document.getElementById("root");
+        // ReactDOM.render(postItem, root);
+        ReactDOM.render(ul, root);
+    </script>
+</html>
