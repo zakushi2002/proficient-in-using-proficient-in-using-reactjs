@@ -1,41 +1,26 @@
 import { useState } from "react";
-
-const products = [18, 8, 2002];
-
+const gifts = [
+    {
+        name: "Màn hình Monitor Xiaomi 27 inch A27i ELA5345EU",
+    },
+    {
+        name: "Xiaomi POCO X6 Pro 5G 8GB 256GB",
+    },
+    {
+        name: "Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C",
+    },
+];
 function App() {
-    const [counter, setCounter] = useState(() => {
-        const total = products.reduce((total, product) => total + product);
-        console.log(total);
-        return total;
-    });
-
-    const handleIncrement = () => {
-        setCounter(counter + 1);
-    };
-    const [myInfo, setMyInfo] = useState({
-        name: "Toàn Huỳnh Thanh Nguyễn",
-        age: 22,
-        email: "toannguyenit239@gmail.com",
-    });
-
-    const handleUpdateInfo = () => {
-        setMyInfo((preData) => {
-            return {
-                ...preData,
-                major: "Software Engineering",
-            };
-        });
+    const contentNoGift = "Click to get a gift";
+    const [gift, setGift] = useState(contentNoGift);
+    const randomGift = () => {
+        const randomIndex = Math.floor(Math.random() * gifts.length);
+        setGift(gifts[randomIndex].name);
     };
     return (
-        <div className="App" style={{ padding: 20 }}>
-            <h1>{counter}</h1>
-            <button onClick={handleIncrement}>Increment</button>
-
-            <h2>Name: {myInfo.name}</h2>
-            <h2>Age: {myInfo.age}</h2>
-            <h2>Email: {myInfo.email}</h2>
-            <h2>Major: {myInfo.major}</h2>
-            <button onClick={handleUpdateInfo}>Update Info</button>
+        <div className="App" style={{ padding: 32 }}>
+            <h1>{gift}</h1>
+            <button onClick={randomGift}>Get</button>
         </div>
     );
 }
