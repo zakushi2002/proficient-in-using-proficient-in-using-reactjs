@@ -1,58 +1,47 @@
 import { useState } from "react";
 
-const positions = [
-    {
-        id: 1,
-        name: "Backend Developer",
-    },
-    {
-        id: 2,
-        name: "Frontend Developer",
-    },
-    {
-        id: 3,
-        name: "Fullstack Developer",
-    },
-    {
-        id: 4,
-        name: "DevOps",
-    },
-    {
-        id: 5,
-        name: "QA",
-    },
-];
-
 function App() {
-    const [selectedPosition, setSelectedPosition] = useState([]);
-    console.log("selectedPosition", selectedPosition);
-    const handleCheck = (id) => {
-        setSelectedPosition((preData) => {
-            if (preData.includes(id)) {
-                return preData.filter((item) => item !== id);
-            }
-            return [...preData, id];
-        });
-    };
+    const [task, setTask] = useState("");
+    const [tasks, setTasks] = useState(() => {
+        // Get local storage
+        const savedTasks = localStorage.getItem("tasks");
+        if (savedTasks) {
+            return JSON.parse(savedTasks);
+        }
+        return [];
+    });
     const handleSubmit = () => {
-        console.log({ ids: selectedPosition });
+        if (!task) return;
+        setTasks((preData) => {
+            // Save local storage
+            preData = [...preData, task];
+            localStorage.setItem("tasks", JSON.stringify(preData));
+            return preData;
+        });
+        setTask("");
+    };
+    const clearTaskLocalStorage = () => {
+        localStorage.removeItem("tasks");
+        setTasks([]);
     };
 
     return (
         <div className="App" style={{ padding: 32 }}>
-            <h1>Apply for a job</h1>
-            {positions.map((position) => (
-                <div key={position.id}>
-                    <input
-                        type="checkbox"
-                        checked={selectedPosition.includes(position.id)}
-                        value={position.id}
-                        onChange={() => handleCheck(position.id)}
-                    />
-                    <label>{position.name}</label>
-                </div>
-            ))}
-            <button onClick={handleSubmit}>Submit</button>
+            <h1>Task List</h1>
+            <input
+                type="text"
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+            />
+            <button onClick={handleSubmit}>Add</button>
+            <button onClick={clearTaskLocalStorage}>
+                Clear Task Local Storage
+            </button>
+            <ul>
+                {tasks.map((task, index) => (
+                    <li key={index}>{task}</li>
+                ))}
+            </ul>
         </div>
     );
 }
