@@ -24,19 +24,30 @@ const positions = [
 ];
 
 function App() {
-    const [selectedPosition, setSelectedPosition] = useState(positions[0].id);
+    const [selectedPosition, setSelectedPosition] = useState([]);
     console.log("selectedPosition", selectedPosition);
-    const handleSubmit = () => {};
+    const handleCheck = (id) => {
+        setSelectedPosition((preData) => {
+            if (preData.includes(id)) {
+                return preData.filter((item) => item !== id);
+            }
+            return [...preData, id];
+        });
+    };
+    const handleSubmit = () => {
+        console.log({ ids: selectedPosition });
+    };
+
     return (
         <div className="App" style={{ padding: 32 }}>
             <h1>Apply for a job</h1>
             {positions.map((position) => (
                 <div key={position.id}>
                     <input
-                        type="radio"
-                        checked={selectedPosition === position.id}
+                        type="checkbox"
+                        checked={selectedPosition.includes(position.id)}
                         value={position.id}
-                        onChange={() => setSelectedPosition(position.id)}
+                        onChange={() => handleCheck(position.id)}
                     />
                     <label>{position.name}</label>
                 </div>
