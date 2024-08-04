@@ -1,10 +1,14 @@
 import { memo } from "react";
-function Content({ count }) {
+
+// Pure Component
+
+function Content({ onIncrease }) {
     console.log("Content");
     return (
-        <div>
-            <h1>HOC {count}</h1>
-        </div>
+        <>
+            <h1>HOC</h1>
+            <button onClick={onIncrease}>Increase</button>
+        </>
     );
 }
 

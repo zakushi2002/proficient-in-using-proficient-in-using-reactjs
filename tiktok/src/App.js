@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Content from "./Content";
 
 // 1. memo() => Higher Order Component (HOC)
 // 2. useCallBack()
+// - Reference types
+// - React.memo()
 
 // Hooks
 // HOC
@@ -10,14 +12,13 @@ import Content from "./Content";
 
 function App() {
     const [count, setCount] = useState(0);
-    const increase = () => {
+    const handleIncrease = useCallback(() => {
         setCount((preData) => preData + 1);
-    };
+    }, []);
     return (
         <div className="App" style={{ padding: `10px 32px` }}>
-            <Content count={count} />
+            <Content onIncrease={handleIncrease} />
             <h1>{count}</h1>
-            <button onClick={increase}>Increase</button>
         </div>
     );
 }
