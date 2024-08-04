@@ -4,21 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// Fake message
-function emitMessage(id) {
-    setInterval(() => {
-        window.dispatchEvent(
-            new CustomEvent(`room-${id}`, {
-                detail: { message: `Hello room ${id}` },
-            })
-        );
-    }, 2500);
-}
-
-emitMessage(1);
-emitMessage(2);
-emitMessage(3);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>

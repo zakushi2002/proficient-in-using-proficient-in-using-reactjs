@@ -1,51 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
-// 1. useEffect(callback)
-// - Gọi callback mỗi khi component re-render
-// - Gọi callback sau khi component thêm element vào DOM
-// 2. useEffect(callback, [])
-// - Chỉ gọi callback sau khi component mounted
-// 3. useEffect(callback, [desps])
-// - Gọi lại callback nếu có 1 trong các deps thay đổi
+// useEffect
+// 1. Cập nhật lại state
+// 2. Cập nhật DOM (mutated)
+// 3. Render lại UI
+// 4. Gọi clean-up nếu dependencies thay đổi
+// 5. Gọi useEffect callback
 
-// ==============================
-// General characteristics
-// a. Callback luôn được gọi sau khi component mounted
-// b. Cleanup function luôn được gọi trước khi component unmounted
-// c. Cleanup function luôn được gọi trước khi callback được gọi lần tiếp theo (trừ lần component mounted)
-const rooms = [
-    { id: 1, name: "ELMS" },
-    { id: 2, name: "Finance" },
-    { id: 3, name: "Family Circle" },
-];
+// useLayoutEffect
+// 1. Cập nhật lại state
+// 2. Cập nhật DOM (mutated)
+// 3. Gọi clean-up nếu dependencies thay đổi (sync) *
+// 4. Gọi useLayoutEffect callback (sync) *
+// 5. Render lại UI
+
 function Content() {
-    const [roomId, setRoomId] = useState(1);
-
-    useEffect(() => {
-        const handlerMessage = ({ detail }) => {
-            console.log(detail.message);
-        };
-        window.addEventListener(`room-${roomId}`, handlerMessage);
+    const [count, setCount] = useState(0);
+    useLayoutEffect(() => {
+        if (count > 3) {
+            setCount(0);
+        }
         return () => {
-            window.removeEventListener(`room-${roomId}`, handlerMessage);
+            console.log("Clean-up");
         };
-    }, [roomId]);
+    }, [count]);
+
+    const handleRun = () => {
+        setCount(count + 1);
+    };
 
     return (
         <div>
-            <ul>
-                {rooms.map((room) => (
-                    <li
-                        key={room.id}
-                        style={{
-                            color: room.id === roomId ? "red" : "black",
-                        }}
-                        onClick={() => setRoomId(room.id)}
-                    >
-                        {room.name}
-                    </li>
-                ))}
-            </ul>
+            <h1>{count}</h1>
+            <button onClick={handleRun}>Run</button>
         </div>
     );
 }
