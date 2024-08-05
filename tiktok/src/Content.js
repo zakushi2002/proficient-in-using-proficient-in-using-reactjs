@@ -1,15 +1,11 @@
-import { memo } from "react";
+import Paragraph from "./Paragraph";
 
-// Pure Component
-
-function Content({ onIncrease }) {
-    console.log("Content");
+function Content() {
     return (
-        <>
-            <h1>HOC</h1>
-            <button onClick={onIncrease}>Increase</button>
-        </>
+        <div>
+            <Paragraph />
+        </div>
     );
 }
 
-export default memo(Content);
+export default Content;
