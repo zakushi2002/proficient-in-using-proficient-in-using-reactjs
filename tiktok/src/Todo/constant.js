@@ -1,0 +1,3 @@
+export const SET_JOB_ACTION = "SET_JOB_ACTION";
+export const ADD_TASK_ACTION = "ADD_TASK_ACTION";
+export const REMOVE_TASK_ACTION = "REMOVE_TASK_ACTION";
