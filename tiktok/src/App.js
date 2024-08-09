@@ -1,29 +1,22 @@
-import { useStore, actions } from "./store";
-
+import Video from "./Video";
+import { useRef } from "react";
 function App() {
-    const [state, dispatch] = useStore();
-    const { tasks, taskInput } = state;
-    const handleAddTask = () => {
-        dispatch(actions.addTask(taskInput));
-        dispatch(actions.setTaskInput(""));
+    const videoRef = useRef();
+
+    const handlePlay = () => {
+        videoRef.current.play();
+    };
+
+    const handlePause = () => {
+        videoRef.current.pause();
     };
 
     return (
         <div className="App" style={{ padding: 32 }}>
-            <h1>Context + useReducer</h1>
-            <input
-                value={state.taskInput}
-                placeholder="Enter task name..."
-                onChange={(e) => {
-                    dispatch(actions.setTaskInput(e.target.value));
-                }}
-            />
-            <button onClick={handleAddTask}>Add Task</button>
-            <ul>
-                {tasks.map((task, index) => (
-                    <li key={index}>{task}</li>
-                ))}
-            </ul>
+            <Video ref={videoRef} />
+            <br />
+            <button onClick={handlePlay}>Play</button>
+            <button onClick={handlePause}>Pause</button>
         </div>
     );
 }
