@@ -7,6 +7,7 @@ function App() {
             <div style={{ padding: "10px 32px" }}>
                 <Button />
                 <Button primary />
+                <Button primary disabled />
             </div>
         </GlobalStyles>
     );
